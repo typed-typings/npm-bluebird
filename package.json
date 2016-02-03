@@ -1,0 +1,25 @@
+{
+  "name": "typed-bluebird",
+  "version": "0.0.1",
+  "description": "The type definition for bluebird",
+  "main": " ",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unional/typed-bluebird.git"
+  },
+  "keywords": [
+    "typings"
+  ],
+  "author": "Unional <homawong@gmail.com> (http://github.com/unional)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/unional/typed-bluebird/issues"
+  },
+  "homepage": "https://github.com/unional/typed-bluebird#readme",
+  "devDependencies": {
+    "gulp": "^3.9.0"
+  }
+}
