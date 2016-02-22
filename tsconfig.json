@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node"
+  },
+  "files": [
+    "bluebird.d.ts",
+    "typings/main.d.ts"
+  ]
+}

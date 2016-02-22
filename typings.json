@@ -1,0 +1,7 @@
+{
+  "name": "bluebird",
+  "main": "bluebird.d.ts",
+  "devDependencies": {
+    "bluebird": "file:bluebird.d.ts"
+  }
+}
