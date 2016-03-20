@@ -202,8 +202,8 @@ declare class Promise<R> implements Promise.Thenable<R>, Promise.Inspection<R> {
 	* });
 	 * </code>
 	 */
-	// TODO find way to fix get()
-	// get<U>(propertyName: string): Promise<U>;
+	// TODO: explain original comment from DT: TODO find way to fix get()
+	get<U>(key: string | number): Promise<U>;
 
 	/**
 	 * Convenience method for:
