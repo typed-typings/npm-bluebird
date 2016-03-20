@@ -1,4 +1,10 @@
 {
   "name": "bluebird",
-  "main": "bluebird.d.ts"
+  "main": "bluebird.d.ts",
+  "devDependencies": {
+    "blue-tape": "registry:npm/blue-tape#0.1.0+20160211003958"
+  },
+  "ambientDevDependencies": {
+    "node": "registry:dt/node#4.0.0+20160319033040"
+  }
 }
