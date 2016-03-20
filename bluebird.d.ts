@@ -542,11 +542,11 @@ declare class Promise<R> implements Promise.Thenable<R>, Promise.Inspection<R> {
 	 */
 
   // multiple values and handler
-  static join<R, A1>(arg1: A1 | Promise.Thenable<A1>, handler: (A1) => R | Promise.Thenable<R>): Promise<R>;
-  static join<R, A1, A2>(arg1: A1 | Promise.Thenable<A1>, arg2: A2 | Promise.Thenable<A2>, handler: (A1, A2) => R | Promise.Thenable<R>): Promise<R>;
-  static join<R, A1, A2, A3>(arg1: A1 | Promise.Thenable<A1>, arg2: A2 | Promise.Thenable<A2>, arg3: A3 | Promise.Thenable<A3>, handler: (A1, A2, A3) => R | Promise.Thenable<R>): Promise<R>;
-  static join<R, A1, A2, A3, A4>(arg1: A1 | Promise.Thenable<A1>, arg2: A2 | Promise.Thenable<A2>, arg3: A3 | Promise.Thenable<A3>, arg4: A4 | Promise.Thenable<A4>, handler: (A1, A2, A3, A4) => R | Promise.Thenable<R>): Promise<R>;
-  static join<R, A1, A2, A3, A4, A5>(arg1: A1 | Promise.Thenable<A1>, arg2: A2 | Promise.Thenable<A2>, arg3: A3 | Promise.Thenable<A3>, arg4: A4 | Promise.Thenable<A4>, arg5: A5 | Promise.Thenable<A5>, handler: (A1, A2, A3, A4, A5) => R | Promise.Thenable<R>): Promise<R>;
+  static join<R, A1>(arg1: A1 | Promise.Thenable<A1>, handler: (arg1: A1) => R | Promise.Thenable<R>): Promise<R>;
+  static join<R, A1, A2>(arg1: A1 | Promise.Thenable<A1>, arg2: A2 | Promise.Thenable<A2>, handler: (arg1: A1, arg2: A2) => R | Promise.Thenable<R>): Promise<R>;
+  static join<R, A1, A2, A3>(arg1: A1 | Promise.Thenable<A1>, arg2: A2 | Promise.Thenable<A2>, arg3: A3 | Promise.Thenable<A3>, handler: (arg1: A1, arg2: A2, arg3: A3) => R | Promise.Thenable<R>): Promise<R>;
+  static join<R, A1, A2, A3, A4>(arg1: A1 | Promise.Thenable<A1>, arg2: A2 | Promise.Thenable<A2>, arg3: A3 | Promise.Thenable<A3>, arg4: A4 | Promise.Thenable<A4>, handler: (arg1: A1, arg2: A2, arg3: A3, arg4: A4) => R | Promise.Thenable<R>): Promise<R>;
+  static join<R, A1, A2, A3, A4, A5>(arg1: A1 | Promise.Thenable<A1>, arg2: A2 | Promise.Thenable<A2>, arg3: A3 | Promise.Thenable<A3>, arg4: A4 | Promise.Thenable<A4>, arg5: A5 | Promise.Thenable<A5>, handler: (arg1: A1, arg2: A2, arg3: A3, arg4: A4, arg5: A5) => R | Promise.Thenable<R>): Promise<R>;
 
 	// variadic array with promises of value
 	static join<R>(...values: Promise.Thenable<R>[]): Promise<R[]>;
