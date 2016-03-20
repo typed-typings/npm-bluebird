@@ -532,8 +532,22 @@ declare class Promise<R> implements Promise.Thenable<R>, Promise.Inspection<R> {
 	static some<R>(values: R[], count: number): Promise<R[]>;
 
 	/**
-	 * Like `Promise.all()` but instead of having to pass an array, the array is generated from the passed variadic arguments.
+   * Promise.join(
+   *   Promise<any>|any values...,
+   *   function handler
+   * ) -> Promise
+   * For coordinating multiple concurrent discrete promises.
+   *
+   * Note: In 1.x and 0.x Promise.join used to be a Promise.all that took the values in as arguments instead in an array. This behavior has been deprecated but is still supported partially - when the last argument is an immediate function value the new semantics will apply
 	 */
+
+  // multiple values and handler
+  static join<R, A1>(arg1: A1 | Promise.Thenable<A1>, handler: (A1) => R | Promise.Thenable<R>): Promise<R>;
+  static join<R, A1, A2>(arg1: A1 | Promise.Thenable<A1>, arg2: A2 | Promise.Thenable<A2>, handler: (A1, A2) => R | Promise.Thenable<R>): Promise<R>;
+  static join<R, A1, A2, A3>(arg1: A1 | Promise.Thenable<A1>, arg2: A2 | Promise.Thenable<A2>, arg3: A3 | Promise.Thenable<A3>, handler: (A1, A2, A3) => R | Promise.Thenable<R>): Promise<R>;
+  static join<R, A1, A2, A3, A4>(arg1: A1 | Promise.Thenable<A1>, arg2: A2 | Promise.Thenable<A2>, arg3: A3 | Promise.Thenable<A3>, arg4: A4 | Promise.Thenable<A4>, handler: (A1, A2, A3, A4) => R | Promise.Thenable<R>): Promise<R>;
+  static join<R, A1, A2, A3, A4, A5>(arg1: A1 | Promise.Thenable<A1>, arg2: A2 | Promise.Thenable<A2>, arg3: A3 | Promise.Thenable<A3>, arg4: A4 | Promise.Thenable<A4>, arg5: A5 | Promise.Thenable<A5>, handler: (A1, A2, A3, A4, A5) => R | Promise.Thenable<R>): Promise<R>;
+
 	// variadic array with promises of value
 	static join<R>(...values: Promise.Thenable<R>[]): Promise<R[]>;
 	// variadic array with values
