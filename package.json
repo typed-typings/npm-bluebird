@@ -6,6 +6,7 @@
   },
   "devDependencies": {
     "blue-tape": "^0.2.0",
+    "bluebird": "3.3.4",
     "ts-node": "^0.7.0",
     "tslint": "github:unional/tslint",
     "tslint-config-typings": "^0.1.1",
