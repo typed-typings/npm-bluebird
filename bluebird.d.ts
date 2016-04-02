@@ -85,10 +85,10 @@ declare class Bluebird<R> implements Bluebird.Thenable<R>, Bluebird.Inspection<R
 	 * Register a node-style callback on this promise. When this promise is is either fulfilled or rejected, the node callback will be called back with the node.js convention where error reason is the first argument and success value is the second argument. The error argument will be `null` in case of success.
 	 * If the `callback` argument is not a function, this method does not do anything.
 	 */
-  nodeify(callback: (err: any, value?: R) => void, options?: Bluebird.SpreadOption): void;
-  nodeify(...sink: any[]): void;
-  asCallback(callback: (err: any, value?: R) => void, options?: Bluebird.SpreadOption): void;
-  asCallback(...sink: any[]): void;
+  nodeify(callback: (err: any, value?: R) => void, options?: Bluebird.SpreadOption): this;
+  nodeify(...sink: any[]): this;
+  asCallback(callback: (err: any, value?: R) => void, options?: Bluebird.SpreadOption): this;
+  asCallback(...sink: any[]): this;
 
 	/**
 	 * See if this `promise` has been fulfilled.
