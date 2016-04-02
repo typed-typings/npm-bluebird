@@ -547,6 +547,16 @@ declare class Bluebird<R> implements Bluebird.Thenable<R>, Bluebird.Inspection<R
 
   disposer<T>(disposeFn: (arg: R, promise: Bluebird<R>) => void): Bluebird.Disposer<R, T>;
   static using<R, T, U>(disposer: Bluebird.Disposer<R, U>, executor: (transaction: R) => Bluebird.Thenable<T>): Bluebird<U>;
+
+	/**
+	 * Add handler as the handler to call when there is a possibly unhandled rejection.
+	 * The default handler logs the error stack to stderr or console.error in browsers.
+	 *
+	 * Passing no value or a non-function will have the effect of removing any kind of handling for possibly unhandled rejections.
+	 *
+	 * Note: this hook is specific to the bluebird instance its called on, application developers should use global rejection events.
+	 */
+	static onPossiblyUnhandledRejection(handler?: (error: Error, promise: Bluebird<any>) => void): void;
 }
 
 declare module Bluebird {
