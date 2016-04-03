@@ -545,8 +545,8 @@ declare class Bluebird<R> implements Bluebird.Thenable<R>, Bluebird.Inspection<R
   // array with values OR promise of array with values
   static each<R, U>(values: R[] | Bluebird.Thenable<R[]>, iterator: (item: R, index: number, arrayLength: number) => U | Bluebird.Thenable<U>): Bluebird<R[]>;
 
-  disposer<T>(disposeFn: (arg: R, promise: Bluebird<R>) => void): Bluebird.Disposer<R, T>;
-  static using<R, T, U>(disposer: Bluebird.Disposer<R, U>, executor: (transaction: R) => Bluebird.Thenable<T>): Bluebird<U>;
+  disposer(disposeFn: (arg: R, promise: Bluebird<R>) => void | Bluebird.Thenable<void>): Bluebird.Disposer<R>;
+  static using<R, T>(disposer: Bluebird.Disposer<R>, executor: (transaction: R) => Bluebird.Thenable<T>): Bluebird<T>;
 
 	/**
 	 * Add handler as the handler to call when there is a possibly unhandled rejection.
@@ -602,7 +602,7 @@ declare module Bluebird {
   export function RejectionError(): RejectionError;
   export function OperationalError(): OperationalError;
 
-  export class Disposer<R, T> {
+  export class Disposer<R> {
   }
 
   export interface Thenable<R> {
