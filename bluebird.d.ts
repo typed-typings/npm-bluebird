@@ -557,6 +557,25 @@ declare class Bluebird<R> implements Bluebird.Thenable<R>, Bluebird.Inspection<R
 	 * Note: this hook is specific to the bluebird instance its called on, application developers should use global rejection events.
 	 */
 	static onPossiblyUnhandledRejection(handler?: (error: Error, promise: Bluebird<any>) => void): void;
+
+  /**
+   * Configure long stack traces, warnings, monitoring and cancellation.
+   * Note that even though false is the default here, a development environment might be detected which automatically
+   *  enables long stack traces and warnings.
+   */
+  static config(options: {
+    /** Enable warnings */
+    warnings?: boolean | {
+      /** Enables all warnings except forgotten return statements. */
+      wForgottenReturn: boolean;
+    };
+    /** Enable long stack traces */
+    longStackTraces?: boolean;
+    /** Enable cancellation */
+    cancellation?: boolean;
+    /** Enable monitoring */
+    monitoring?: boolean;
+  }): void;
 }
 
 declare module Bluebird {
