@@ -70,16 +70,18 @@ declare class Bluebird<R> implements Bluebird.Thenable<R>, Bluebird.Inspection<R
   tap<U>(onFulfill: (value: R) => U): Bluebird<R>;
 
   /**
-   * Same as calling `Promise.delay(this, ms)`. With the exception that if this promise is bound to a value, the returned promise is bound to that value too.
+   * Same as calling `Promise.delay(ms, this)`.
    */
   delay(ms: number): Bluebird<R>;
 
   /**
-   * Returns a promise that will be fulfilled with this promise's fulfillment value or rejection reason. However, if this promise is not fulfilled or rejected within `ms` milliseconds, the returned promise is rejected with a `Promise.TimeoutError` instance.
+   * Returns a promise that will be fulfilled with this promise's fulfillment value or rejection reason.
+   *  However, if this promise is not fulfilled or rejected within ms milliseconds, the returned promise
+   *  is rejected with a TimeoutError or the error as the reason.
    *
    * You may specify a custom error message with the `message` parameter.
    */
-  timeout(ms: number, message?: string): Bluebird<R>;
+  timeout(ms: number, message?: string | Error): Bluebird<R>;
 
   /**
    * Register a node-style callback on this promise. When this promise is is either fulfilled or rejected, the node callback will be called back with the node.js convention where error reason is the first argument and success value is the second argument. The error argument will be `null` in case of success.
@@ -323,11 +325,11 @@ declare class Bluebird<R> implements Bluebird.Thenable<R>, Bluebird.Inspection<R
   static longStackTraces(): void;
 
   /**
-   * Returns a promise that will be fulfilled with `value` (or `undefined`) after given `ms` milliseconds. If `value` is a promise, the delay will start counting down when it is fulfilled and the returned promise will be fulfilled with the fulfillment value of the `value` promise.
+   * Returns a promise that will be resolved with value (or undefined) after given ms milliseconds.
+   * If value is a promise, the delay will start counting down when it is fulfilled and the returned
+   *  promise will be fulfilled with the fulfillment value of the value promise.
    */
-  // TODO enable more overloads
-  static delay<R>(value: Bluebird.Thenable<R>, ms: number): Bluebird<R>;
-  static delay<R>(value: R, ms: number): Bluebird<R>;
+  static delay<R>(ms: number, value: R | Bluebird.Thenable<R>): Bluebird<R>;
   static delay(ms: number): Bluebird<void>;
 
   /**
@@ -545,8 +547,26 @@ declare class Bluebird<R> implements Bluebird.Thenable<R>, Bluebird.Inspection<R
   // array with values OR promise of array with values
   static each<R, U>(values: R[] | Bluebird.Thenable<R[]>, iterator: (item: R, index: number, arrayLength: number) => U | Bluebird.Thenable<U>): Bluebird<R[]>;
 
+  /**
+   * A meta method used to specify the disposer method that cleans up a resource when using `Promise.using`.
+   *
+   * Returns a Disposer object which encapsulates both the resource as well as the method to clean it up.
+   *  The user can pass this object to `Promise.using` to get access to the resource when it becomes available,
+   *  as well as to ensure its automatically cleaned up.
+   *
+   * The second argument passed to a disposer is the result promise of the using block, which you can
+   *  inspect synchronously.
+   */
   disposer(disposeFn: (arg: R, promise: Bluebird<R>) => void | Bluebird.Thenable<void>): Bluebird.Disposer<R>;
+
+  /**
+   * In conjunction with `.disposer`, using will make sure that no matter what, the specified disposer
+   *  will be called when the promise returned by the callback passed to using has settled. The disposer is
+   *  necessary because there is no standard interface in node for disposing resources.
+   */
   static using<R, T>(disposer: Bluebird.Disposer<R>, executor: (transaction: R) => Bluebird.Thenable<T>): Bluebird<T>;
+  static using<R1, R2, T>(disposer: Bluebird.Disposer<R1>, disposer2: Bluebird.Disposer<R2>, executor: (transaction1: R1, transaction2: R2) => Bluebird.Thenable<T>): Bluebird<T>;
+  static using<R1, R2, R3, T>(disposer: Bluebird.Disposer<R1>, disposer2: Bluebird.Disposer<R2>, disposer3: Bluebird.Disposer<R3>, executor: (transaction1: R1, transaction2: R2, transaction3: R3) => Bluebird.Thenable<T>): Bluebird<T>;
 
   /**
    * Add handler as the handler to call when there is a possibly unhandled rejection.
@@ -579,17 +599,6 @@ declare class Bluebird<R> implements Bluebird.Thenable<R>, Bluebird.Inspection<R
 }
 
 declare module Bluebird {
-  export interface RangeError extends Error {
-  }
-  export interface TimeoutError extends Error {
-  }
-  export interface TypeError extends Error {
-  }
-  export interface RejectionError extends Error {
-  }
-  export interface OperationalError extends Error {
-  }
-
   export interface ConcurrencyOption {
     concurrency: number;
   }
@@ -610,17 +619,39 @@ declare module Bluebird {
     promisifier?: (originalMethod: Function) => () => Thenable<any>;
   }
 
-  // Ideally, we'd define e.g. "export class RangeError extends Error {}",
-  // but as Error is defined as an interface (not a class), TypeScript doesn't
-  // allow extending Error, only implementing it.
-  // However, if we want to catch() only a specific error type, we need to pass
-  // a constructor function to it. So, as a workaround, we define them here as such.
-  export function RangeError(): RangeError;
-  export function TimeoutError(): TimeoutError;
-  export function TypeError(): TypeError;
-  export function RejectionError(): RejectionError;
-  export function OperationalError(): OperationalError;
+  /**
+   * Represents an error is an explicit promise rejection as opposed to a thrown error.
+   *  For example, if an error is errbacked by a callback API promisified through undefined or undefined
+   *  and is not a typed error, it will be converted to a `OperationalError` which has the original error in
+   *  the `.cause` property.
+   *
+   * `OperationalError`s are caught in `.error` handlers.
+   */
+  export class OperationalError extends Error { }
 
+  /**
+   * Signals that an operation has timed out. Used as a custom cancellation reason in `.timeout`.
+   */
+  export class TimeoutError extends Error { }
+
+  /**
+   * Signals that an operation has been aborted or cancelled. The default reason used by `.cancel`.
+   */
+  export class CancellationError extends Error {}
+
+  /**
+   * A collection of errors. `AggregateError` is an array-like object, with numeric indices and a `.length` property.
+   *  It supports all generic array methods such as `.forEach` directly.
+   *
+   * `AggregateError`s are caught in `.error` handlers, even if the contained errors are not operational.
+   *
+   * `Promise.some` and `Promise.any` use `AggregateError` as rejection reason when they fail.
+   */
+  export class AggregateError extends Error {}
+
+  /**
+   * returned by `Bluebird.disposer()`.
+   */
   export class Disposer<R> {
   }
 
