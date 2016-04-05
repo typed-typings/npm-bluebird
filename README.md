@@ -1,3 +1,5 @@
 # Typed Bluebird
+The type definition for [bluebird](https://github.com/petkaantonov/bluebird).
 
-Typescript Typings for [Bluebird](http://bluebirdjs.com).
+# LICENSE
+MIT
