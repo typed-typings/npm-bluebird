@@ -1,6 +1,7 @@
 {
   "private": true,
   "scripts": {
+    "postinstall": "typings install",
     "build": "typings bundle -o test",
     "test": "ts-node -n test/test.ts"
   },
