@@ -1,10 +1,14 @@
 {
   "compilerOptions": {
     "module": "commonjs",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "outDir": "out"
   },
-  "files": [
-    "bluebird.d.ts",
-    "typings/main.d.ts"
+  "exclude": [
+    "node_modules",
+    "typings/browser",
+    "typings/browser.d.ts",
+    "out/browser.d.ts",
+    "source"
   ]
 }

@@ -1,6 +1,7 @@
 {
   "name": "bluebird",
   "main": "bluebird.d.ts",
+  "version": "3.3.4",
   "devDependencies": {
     "blue-tape": "registry:npm/blue-tape#0.1.0+20160322235613"
   },
