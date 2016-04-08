@@ -1,9 +1,10 @@
 {
   "compilerOptions": {
-    "module" : "commonjs"
+    "module": "commonjs",
+    "moduleResolution": "node"
   },
   "files": [
-    "test.ts",
-    "../typings/main.d.ts"
+    "../typings/main.d.ts",
+    "../out/main.d.ts"
   ]
 }
