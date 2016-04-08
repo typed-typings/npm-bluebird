@@ -598,7 +598,7 @@ declare class Bluebird<R> implements Bluebird.Thenable<R>, Bluebird.Inspection<R
   }): void;
 }
 
-declare module Bluebird {
+declare namespace Bluebird {
   export interface ConcurrencyOption {
     concurrency: number;
   }
