@@ -467,18 +467,15 @@ declare class Bluebird<R> implements Bluebird.Thenable<R>, Bluebird.Inspection<R
    *
    * Note: In 1.x and 0.x Promise.join used to be a Promise.all that took the values in as arguments instead in an array. This behavior has been deprecated but is still supported partially - when the last argument is an immediate function value the new semantics will apply
    */
-
-  // multiple values and handler
   static join<R, A1>(arg1: A1 | Bluebird.Thenable<A1>, handler: (arg1?: A1) => R | Bluebird.Thenable<R>): Bluebird<R>;
   static join<R, A1, A2>(arg1: A1 | Bluebird.Thenable<A1>, arg2: A2 | Bluebird.Thenable<A2>, handler: (arg1?: A1, arg2?: A2) => R | Bluebird.Thenable<R>): Bluebird<R>;
   static join<R, A1, A2, A3>(arg1: A1 | Bluebird.Thenable<A1>, arg2: A2 | Bluebird.Thenable<A2>, arg3: A3 | Bluebird.Thenable<A3>, handler: (arg1?: A1, arg2?: A2, arg3?: A3) => R | Bluebird.Thenable<R>): Bluebird<R>;
   static join<R, A1, A2, A3, A4>(arg1: A1 | Bluebird.Thenable<A1>, arg2: A2 | Bluebird.Thenable<A2>, arg3: A3 | Bluebird.Thenable<A3>, arg4: A4 | Bluebird.Thenable<A4>, handler: (arg1?: A1, arg2?: A2, arg3?: A3, arg4?: A4) => R | Bluebird.Thenable<R>): Bluebird<R>;
   static join<R, A1, A2, A3, A4, A5>(arg1: A1 | Bluebird.Thenable<A1>, arg2: A2 | Bluebird.Thenable<A2>, arg3: A3 | Bluebird.Thenable<A3>, arg4: A4 | Bluebird.Thenable<A4>, arg5: A5 | Bluebird.Thenable<A5>, handler: (arg1?: A1, arg2?: A2, arg3?: A3, arg4?: A4, arg5?: A5) => R | Bluebird.Thenable<R>): Bluebird<R>;
 
-  // variadic array with promises of value
-  static join<R>(...values: Bluebird.Thenable<R>[]): Bluebird<R[]>;
-  // variadic array with values
-  static join<R>(...values: R[]): Bluebird<R[]>;
+  // variadic array
+  /** @deprecated use .all instead */
+  static join<R>(...values: (R | Bluebird.Thenable<R>)[]): Bluebird<R[]>;
 
   /**
    * Map an array, or a promise of an array, which contains a promises (or a mix of promises and values) with the given `mapper` function with the signature `(item, index, arrayLength)` where `item` is the resolved value of a respective promise in the input array. If any promise in the input array is rejected the returned promise is rejected as well.
