@@ -151,7 +151,8 @@ declare class Bluebird<R> implements Bluebird.Thenable<R>, Bluebird.Inspection<R
    * });
    * </code>
    */
-  // TODO: Use something like subtypes (TS roadmap ?) to get the type U automatically.
+  // TODO: Use "type property type" once it's there
+  // @see https://github.com/Microsoft/TypeScript/issues/1295
   get<U>(key: string | number): Bluebird<U>;
 
   /**
