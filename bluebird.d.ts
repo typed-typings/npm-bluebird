@@ -127,7 +127,8 @@ declare class Bluebird<R> implements Bluebird.Thenable<R>, Bluebird.Inspection<R
   reason(): any;
 
   /**
-   * Synchronously inspect the state of this `promise`. The `PromiseInspection` will represent the state of the promise as snapshotted at the time of calling `.inspect()`.
+   * Synchronously inspect the state of this `promise`. The `PromiseInspection` will represent the state of
+   * the promise as snapshotted at the time of calling `.reflect()`.
    */
   reflect(): Bluebird.Inspection<R>;
 
