@@ -219,12 +219,6 @@ declare class Bluebird<R> implements Bluebird.Thenable<R>, Bluebird.Inspection<R
   props(): Bluebird<Object>;
 
   /**
-   * Same as calling `Promise.settle(thisPromise)`. With the exception that if this promise is bound to a value, the returned promise is bound to that value too.
-   */
-  // TODO type inference from array-resolving promise?
-  settle<U>(): Bluebird<Bluebird.Inspection<U>[]>;
-
-  /**
    * Same as calling `Promise.any(thisPromise)`. With the exception that if this promise is bound to a value, the returned promise is bound to that value too.
    */
   // TODO type inference from array-resolving promise?
@@ -403,20 +397,6 @@ declare class Bluebird<R> implements Bluebird.Thenable<R>, Bluebird.Inspection<R
   static props(object: Bluebird<Object>): Bluebird<Object>;
   // object
   static props(object: Object): Bluebird<Object>;
-
-  /**
-   * Given an array, or a promise of an array, which contains promises (or a mix of promises and values) return a promise that is fulfilled when all the items in the array are either fulfilled or rejected. The fulfillment value is an array of ``PromiseInspection`` instances at respective positions in relation to the input array.
-   *
-   * *original: The array is not modified. The input array sparsity is retained in the resulting array.*
-   */
-  // promise of array with promises of value
-  static settle<R>(values: Bluebird.Thenable<Bluebird.Thenable<R>[]>): Bluebird<Bluebird.Inspection<R>[]>;
-  // promise of array with values
-  static settle<R>(values: Bluebird.Thenable<R[]>): Bluebird<Bluebird.Inspection<R>[]>;
-  // array with promises of value
-  static settle<R>(values: Bluebird.Thenable<R>[]): Bluebird<Bluebird.Inspection<R>[]>;
-  // array with values
-  static settle<R>(values: R[]): Bluebird<Bluebird.Inspection<R>[]>;
 
   /**
    * Like `Promise.some()`, with 1 as `count`. However, if the promise fulfills, the fulfillment value is not an array of 1 but the value directly.
