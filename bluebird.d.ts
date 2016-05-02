@@ -55,7 +55,7 @@ declare class Bluebird<R> implements Bluebird.Thenable<R>, Bluebird.Inspection<R
   /**
    * Like `.then()`, but any unhandled rejection that ends up here will be thrown as an error.
    */
-  done<U>(onFulfilled: (value: R) => U | Bluebird.Thenable<U>, onRejected: (error: any) => U | Bluebird.Thenable<U>): void;
+  done<U>(onFulfilled?: (value: R) => U | Bluebird.Thenable<U>, onRejected?: (error: any) => U | Bluebird.Thenable<U>): void;
 
   /**
    * Like `.finally()`, but not called for rejections.
