@@ -263,6 +263,11 @@ declare class Bluebird<R> implements Bluebird.Thenable<R>, Bluebird.Inspection<R
   each<R, U>(iterator: (item: R, index: number, arrayLength: number) => U | Bluebird.Thenable<U>): Bluebird<R[]>;
 
   /**
+   * Same as calling ``Bluebird.mapSeries(thisPromise, iterator)``. With the exception that if this promise is bound to a value, the returned promise is bound to that value too.
+   */
+  mapSeries<R, U>(iterator: (item: R, index: number, arrayLength: number) => U | Bluebird.Thenable<U>): Bluebird<U[]>;
+
+  /**
    * Start the chain of promises with `Promise.try`. Any synchronous exceptions will be turned into rejections on the returned promise.
    *
    * Note about second argument: if it's specifically a true array, its values become respective arguments for the function call. Otherwise it is passed as is as the first argument for the function call.
@@ -539,6 +544,15 @@ declare class Bluebird<R> implements Bluebird.Thenable<R>, Bluebird.Inspection<R
   static each<R, U>(values: Bluebird.Thenable<R>[], iterator: (item: R, index: number, arrayLength: number) => U | Bluebird.Thenable<U>): Bluebird<R[]>;
   // array with values OR promise of array with values
   static each<R, U>(values: R[] | Bluebird.Thenable<R[]>, iterator: (item: R, index: number, arrayLength: number) => U | Bluebird.Thenable<U>): Bluebird<R[]>;
+
+  /**
+   * Given an Iterable(arrays are Iterable), or a promise of an Iterable, which produces promises (or a mix of promises and values), iterate over all the values in the Iterable into an array and iterate over the array serially, in-order.
+   *
+   * Returns a promise for an array that contains the values returned by the iterator function in their respective positions. The iterator won't be called for an item until its previous item, and the promise returned by the iterator for that item are fulfilled. This results in a mapSeries kind of utility but it can also be used simply as a side effect iterator similar to Array#forEach.
+   *
+   * If any promise in the input array is rejected or any promise returned by the iterator function is rejected, the result will be rejected as well.
+   */
+  static mapSeries<R, U>(values: (R | Bluebird.Thenable<R>)[] | Bluebird.Thenable<(R | Bluebird.Thenable<R>)[]>, iterator: (item: R, index: number, arrayLength: number) => U | Bluebird.Thenable<U>): Bluebird<U[]>;
 
   /**
    * A meta method used to specify the disposer method that cleans up a resource when using `Promise.using`.
