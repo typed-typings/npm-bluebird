@@ -369,11 +369,11 @@ declare class Bluebird<R> implements Bluebird.Thenable<R>, Bluebird.Inspection<R
    */
   // TODO enable more overloads
   // array with promises of different types
-  static all<T1>(values: [Bluebird.Thenable<T1> | T1]): Bluebird<[T1]>;
-  static all<T1, T2>(values: [Bluebird.Thenable<T1> | T1, Bluebird.Thenable<T2> | T2]): Bluebird<[T1, T2]>;
-  static all<T1, T2, T3>(values: [Bluebird.Thenable<T1> | T1, Bluebird.Thenable<T2> | T2, Bluebird.Thenable<T3> | T3]): Bluebird<[T1, T2, T3]>;
-  static all<T1, T2, T3, T4>(values: [Bluebird.Thenable<T1> | T1, Bluebird.Thenable<T2> | T2, Bluebird.Thenable<T3> | T3, Bluebird.Thenable<T4> | T4]): Bluebird<[T1, T2, T3, T4]>;
   static all<T1, T2, T3, T4, T5>(values: [Bluebird.Thenable<T1> | T1, Bluebird.Thenable<T2> | T2, Bluebird.Thenable<T3> | T3, Bluebird.Thenable<T4> | T4, Bluebird.Thenable<T5> | T5]): Bluebird<[T1, T2, T3, T4, T5]>;
+  static all<T1, T2, T3, T4>(values: [Bluebird.Thenable<T1> | T1, Bluebird.Thenable<T2> | T2, Bluebird.Thenable<T3> | T3, Bluebird.Thenable<T4> | T4]): Bluebird<[T1, T2, T3, T4]>;
+  static all<T1, T2, T3>(values: [Bluebird.Thenable<T1> | T1, Bluebird.Thenable<T2> | T2, Bluebird.Thenable<T3> | T3]): Bluebird<[T1, T2, T3]>;
+  static all<T1, T2>(values: [Bluebird.Thenable<T1> | T1, Bluebird.Thenable<T2> | T2]): Bluebird<[T1, T2]>;
+  static all<T1>(values: [Bluebird.Thenable<T1> | T1]): Bluebird<[T1]>;
   // array with values
   static all<R>(values: ((R | Bluebird.Thenable<R>) | Bluebird.Thenable<(R | Bluebird.Thenable<R>)>)[]): Bluebird<R[]>;
 
