@@ -3,9 +3,9 @@
   "main": "bluebird.d.ts",
   "version": "3.3.4",
   "devDependencies": {
-    "blue-tape": "registry:npm/blue-tape#0.1.0+20160322235613"
+    "blue-tape": "registry:npm/blue-tape#0.2.0+20160623043621"
   },
-  "ambientDevDependencies": {
-    "node": "registry:dt/node#4.0.0+20160330064709"
+  "globalDevDependencies": {
+    "node": "registry:env/node#6.0.0+20160622202520"
   }
 }
