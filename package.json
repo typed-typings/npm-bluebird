@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "build": "echo building... && typings bundle -o out",
+    "build": "echo building... && typings bundle -o out/index.d.ts",
     "lint": "echo linting... && tslint \"**/*.ts\" -e \"node_modules/**\" -e \"source/**\"  -e \"source-test/**\" -e \"out/**\" -e \"typings/**\"",
     "test": "echo testing... && cd test && ts-node ../node_modules/blue-tape/bin/blue-tape \"**/*.ts\" | tap-spec",
     "source-test": "echo source-testing... && echo no source-test configured",
@@ -18,9 +18,9 @@
     "onchange": "^2.2.0",
     "tap-spec": "^4.1.1",
     "ts-node": "^0.7.0",
-    "tslint": "^3.7.3",
-    "tslint-config-typings": "^0.2.2",
-    "typescript": "^1.8.9",
-    "typings": "^0.7.12"
+    "tslint": "^3.12.1",
+    "tslint-config-typings": "^0.2.3",
+    "typescript": "^1.8.10",
+    "typings": "^1.3.0"
   }
 }

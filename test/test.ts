@@ -2,11 +2,19 @@ import test = require('blue-tape');
 import Bluebird = require('bluebird');
 
 test('Promise.ctor', (t) => {
+  // Ensure it works for type inferring case.
+  let p = new Bluebird((resolve, reject) => {
+    resolve();
+    resolve(null);
+    reject();
+    reject(null);
+  });
   return new Bluebird<void>((resolve, reject) => {
+    resolve();
     t.assert(typeof resolve === 'function', 'resolve is a function');
     t.assert(typeof reject === 'function', 'reject is a function');
     resolve(null);
-  });
+  }).then(() => p);
 });
 
 test('reflect', (t) => {

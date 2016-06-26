@@ -6,9 +6,7 @@
   },
   "exclude": [
     "node_modules",
-    "typings/browser",
-    "typings/browser.d.ts",
-    "out/browser.d.ts",
+    "out",
     "source"
   ]
 }
