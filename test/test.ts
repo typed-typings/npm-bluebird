@@ -34,3 +34,43 @@ test('reflect', (t) => {
     }
   });
 });
+
+test('catch with predicate shorthand', (t) => {
+  const error = {
+    code: 'ENOENT',
+    message: 'No entity found'
+  };
+
+  return new Bluebird((resolve, reject) => {
+    reject(error);
+  }).catch({ code: 'ENOENT' }, (e) => {
+    t.equal(e.code, 'ENOENT');
+  });
+});
+
+test('catch with predicate shorthand with extra properties', (t) => {
+  const error = {
+    code: 'ENOENT',
+    message: 'No entity found'
+  };
+
+  return new Bluebird((resolve, reject) => {
+    reject(error);
+}).catch({ code: 'ENOENT', message: 'No entity found' }, (e) => {
+    t.equal(e.code, 'ENOENT');
+    t.equal(e.message, 'No entity found');
+  });
+});
+
+test('catch with function predicate', (t) => {
+  const error = {
+    code: 'ENOENT',
+    message: 'No entity found'
+  };
+
+  return new Bluebird((resolve, reject) => {
+    reject(error);
+  }).catch(e => e.code === 'ENOENT', (e) => {
+    t.equal(e.code, 'ENOENT');
+  });
+});
