@@ -1,11 +1,6 @@
 // Type definitions for Bluebird v3.x.x
 // Project: http://bluebirdjs.com
 
-interface ErrorInterface {
-  code: string;
-  [index: string]: any;
-}
-
 declare class Bluebird<R> implements Bluebird.Thenable<R>, Bluebird.Inspection<R> {
   /**
    * Create a new promise. The passed in function will receive functions `resolve` and `reject` as its arguments which can be called to seal the fate of the created promise.
@@ -33,12 +28,12 @@ declare class Bluebird<R> implements Bluebird.Thenable<R>, Bluebird.Inspection<R
    *
    * Alias `.caught();` for compatibility with earlier ECMAScript version.
    */
-  catch(predicate: ErrorInterface, onReject: (error: any) => R | Bluebird.Thenable<R> | void | Bluebird.Thenable<void>): Bluebird<R>;
-  catch<U>(predicate: ErrorInterface, onReject: (error: any) => U | Bluebird.Thenable<U>): Bluebird<U | R>;
   catch(predicate: (error: any) => boolean, onReject: (error: any) => R | Bluebird.Thenable<R> | void | Bluebird.Thenable<void>): Bluebird<R>;
   catch<U>(predicate: (error: any) => boolean, onReject: (error: any) => U | Bluebird.Thenable<U>): Bluebird<U | R>;
   catch(ErrorClass: Function, onReject: (error: any) => R | Bluebird.Thenable<R> | void | Bluebird.Thenable<void>): Bluebird<R>;
   catch<U>(ErrorClass: Function, onReject: (error: any) => U | Bluebird.Thenable<U>): Bluebird<U | R>;
+  catch(predicate: Object, onReject: (error: any) => R | Bluebird.Thenable<R> | void | Bluebird.Thenable<void>): Bluebird<R>;
+  catch<U>(predicate: Object, onReject: (error: any) => U | Bluebird.Thenable<U>): Bluebird<U | R>;
 
   /**
    * Like `.catch` but instead of catching all types of exceptions, it only catches those that don't originate from thrown errors but rather from explicit rejections.
