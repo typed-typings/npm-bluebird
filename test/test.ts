@@ -44,7 +44,7 @@ test('catch with predicate shorthand', (t) => {
   return new Bluebird((resolve, reject) => {
     reject(error);
   }).catch({ code: 'ENOENT' }, (e) => {
-    t.equal(e.code, 'ENOENT')
+    t.equal(e.code, 'ENOENT');
   });
 });
 
@@ -57,6 +57,6 @@ test('catch with function predicate', (t) => {
   return new Bluebird((resolve, reject) => {
     reject(error);
   }).catch(e => e.code === 'ENOENT', (e) => {
-    t.equal(e.code, 'ENOENT')
+    t.equal(e.code, 'ENOENT');
   });
 });
