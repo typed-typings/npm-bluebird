@@ -1,6 +1,25 @@
 import test = require('blue-tape');
 import Bluebird = require('bluebird');
 
+test('cancellation', (t) => {
+  t.plan(3);
+
+  new Bluebird((resolve, reject, onCancel) => {
+    t.equal(onCancel, undefined, 'onCancel argument is not available if cancellation is not enabled');
+    resolve();
+  });
+  Bluebird.config({
+    cancellation: true
+  });
+  const cancellablePromise = new Bluebird((resolve, reject, onCancel) => {
+    onCancel(() => {
+      t.pass('onCancel accepts callback function');
+    });
+  });
+  cancellablePromise.cancel();
+  t.true(cancellablePromise.isCancelled(), 'cancellation state can be inspected');
+});
+
 test('Promise.ctor', (t) => {
   // Ensure it works for type inferring case.
   let p = new Bluebird((resolve, reject) => {

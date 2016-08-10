@@ -4,8 +4,9 @@
 declare class Bluebird<R> implements Bluebird.Thenable<R>, Bluebird.Inspection<R> {
   /**
    * Create a new promise. The passed in function will receive functions `resolve` and `reject` as its arguments which can be called to seal the fate of the created promise.
+   * If promise cancellation is enabled, passed in function will receive one more function argument `onCancel` that allows to register an optional cancellation callback.
    */
-  constructor(callback: (resolve: (thenableOrResult?: R | Bluebird.Thenable<R>) => void, reject: (error?: any) => void) => void);
+  constructor(callback: (resolve: (thenableOrResult?: R | Bluebird.Thenable<R>) => void, reject: (error?: any) => void, onCancel?: (callback: () => void) => void) => void);
 
   /**
    * Promises/A+ `.then()`. Returns a new promise chained from this promise. The new promise will be rejected or resolved dedefer on the passed `fulfilledHandler`, `rejectedHandler` and the state of this promise.
@@ -102,6 +103,11 @@ declare class Bluebird<R> implements Bluebird.Thenable<R>, Bluebird.Inspection<R
    * See if this `promise` is still defer.
    */
   isPending(): boolean;
+
+  /**
+   * See if this `promise` has been cancelled.
+   */
+  isCancelled(): boolean;
 
   /**
    * See if this `promise` is resolved -> either fulfilled or rejected.
@@ -259,6 +265,11 @@ declare class Bluebird<R> implements Bluebird.Thenable<R>, Bluebird.Inspection<R
    * Same as calling ``Bluebird.mapSeries(thisPromise, iterator)``. With the exception that if this promise is bound to a value, the returned promise is bound to that value too.
    */
   mapSeries<R, U>(iterator: (item: R, index: number, arrayLength: number) => U | Bluebird.Thenable<U>): Bluebird<U[]>;
+
+  /**
+   * Cancel this `promise`. Will not do anything if this promise is already settled or if the cancellation feature has not been enabled
+   */
+  cancel(): void;
 
   /**
    * Start the chain of promises with `Promise.try`. Any synchronous exceptions will be turned into rejections on the returned promise.
@@ -666,6 +677,11 @@ declare namespace Bluebird {
      * See if the underlying promise was rejected at the creation time of this inspection object.
      */
     isRejected(): boolean;
+
+    /**
+     * See if the underlying promise was cancelled at the creation time of this inspection object.
+     */
+    isCancelled(): boolean;
 
     /**
      * See if the underlying promise was defer at the creation time of this inspection object.
