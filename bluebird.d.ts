@@ -377,7 +377,7 @@ declare class Bluebird<R> implements Bluebird.Thenable<R>, Bluebird.Inspection<R
   static all<T1, T2>(values: [Bluebird.Thenable<T1> | T1, Bluebird.Thenable<T2> | T2]): Bluebird<[T1, T2]>;
   static all<T1>(values: [Bluebird.Thenable<T1> | T1]): Bluebird<[T1]>;
   // array with values
-  static all<R>(values: ((R | Bluebird.Thenable<R>) | Bluebird.Thenable<(R | Bluebird.Thenable<R>)>)[]): Bluebird<R[]>;
+  static all<R>(values: Bluebird.Thenable<(Bluebird.Thenable<R> | R)[]> | (Bluebird.Thenable<R> | R)[]): Bluebird<R[]>;
 
   /**
    * Like ``Promise.all`` but for object properties instead of array items. Returns a promise that is fulfilled when all the properties of the object are fulfilled. The promise's fulfillment value is an object with fulfillment values at respective keys to the original object. If any promise in the object rejects, the returned promise is rejected with the rejection reason.
