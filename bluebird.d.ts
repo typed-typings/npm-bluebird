@@ -19,7 +19,9 @@ declare class Bluebird<R> implements Bluebird.Thenable<R>, Bluebird.Inspection<R
    * Alias `.caught();` for compatibility with earlier ECMAScript version.
    */
   catch(onReject?: (error: any) => R | Bluebird.Thenable<R> | void | Bluebird.Thenable<void>): Bluebird<R>;
+  caught(onReject?: (error: any) => R | Bluebird.Thenable<R> | void | Bluebird.Thenable<void>): Bluebird<R>;
   catch<U>(onReject?: (error: any) => U | Bluebird.Thenable<U>): Bluebird<U | R>;
+  caught<U>(onReject?: (error: any) => U | Bluebird.Thenable<U>): Bluebird<U | R>;
 
   /**
    * This extends `.catch` to work more like catch-clauses in languages like Java or C#. Instead of manually checking `instanceof` or `.name === "SomeError"`, you may specify a number of error constructors which are eligible for this catch handler. The catch handler that is first met that has eligible constructors specified, is the one that will be called.
@@ -29,11 +31,17 @@ declare class Bluebird<R> implements Bluebird.Thenable<R>, Bluebird.Inspection<R
    * Alias `.caught();` for compatibility with earlier ECMAScript version.
    */
   catch(predicate: (error: any) => boolean, onReject: (error: any) => R | Bluebird.Thenable<R> | void | Bluebird.Thenable<void>): Bluebird<R>;
+  caught(predicate: (error: any) => boolean, onReject: (error: any) => R | Bluebird.Thenable<R> | void | Bluebird.Thenable<void>): Bluebird<R>;
   catch<U>(predicate: (error: any) => boolean, onReject: (error: any) => U | Bluebird.Thenable<U>): Bluebird<U | R>;
+  caught<U>(predicate: (error: any) => boolean, onReject: (error: any) => U | Bluebird.Thenable<U>): Bluebird<U | R>;
   catch(ErrorClass: Function, onReject: (error: any) => R | Bluebird.Thenable<R> | void | Bluebird.Thenable<void>): Bluebird<R>;
+  caught(ErrorClass: Function, onReject: (error: any) => R | Bluebird.Thenable<R> | void | Bluebird.Thenable<void>): Bluebird<R>;
   catch<U>(ErrorClass: Function, onReject: (error: any) => U | Bluebird.Thenable<U>): Bluebird<U | R>;
+  caught<U>(ErrorClass: Function, onReject: (error: any) => U | Bluebird.Thenable<U>): Bluebird<U | R>;
   catch(predicate: Object, onReject: (error: any) => R | Bluebird.Thenable<R> | void | Bluebird.Thenable<void>): Bluebird<R>;
+  caught(predicate: Object, onReject: (error: any) => R | Bluebird.Thenable<R> | void | Bluebird.Thenable<void>): Bluebird<R>;
   catch<U>(predicate: Object, onReject: (error: any) => U | Bluebird.Thenable<U>): Bluebird<U | R>;
+  caught<U>(predicate: Object, onReject: (error: any) => U | Bluebird.Thenable<U>): Bluebird<U | R>;
 
   /**
    * Like `.catch` but instead of catching all types of exceptions, it only catches those that don't originate from thrown errors but rather from explicit rejections.
@@ -268,7 +276,6 @@ declare class Bluebird<R> implements Bluebird.Thenable<R>, Bluebird.Inspection<R
    * Alias for `attempt();` for compatibility with earlier ECMAScript version.
    */
   static try<R>(fn: () => R | Bluebird.Thenable<R>): Bluebird<R>;
-
   static attempt<R>(fn: () => R | Bluebird.Thenable<R>): Bluebird<R>;
 
   /**
@@ -686,6 +693,13 @@ declare namespace Bluebird {
      */
     reason(): any;
   }
+
+  /**
+   * This is relevant to browser environments with no module loader.
+   *
+   * Release control of the Promise namespace to whatever it was before this library was loaded. Returns a reference to the library namespace so you can attach it to something else.
+   */
+  export function noConflict(): typeof Bluebird;
 
   /**
    * Changes how bluebird schedules calls a-synchronously.
