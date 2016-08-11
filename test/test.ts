@@ -93,3 +93,9 @@ test('catch with function predicate', (t) => {
     t.equal(e.code, 'ENOENT');
   });
 });
+
+test('Utility methods', (t) => {
+  t.ok(typeof Bluebird.version === 'string', 'should have a version number');
+  t.ok(typeof Bluebird.getNewLibraryCopy() === 'function', 'should return a new Bluebird instance');
+  t.end();
+});

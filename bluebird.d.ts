@@ -711,6 +711,13 @@ declare namespace Bluebird {
   }
 
   /**
+   * Returns a new independent copy of the Bluebird library.
+   *
+   * This method should be used before you use any of the methods which would otherwise alter the global Bluebird object - to avoid polluting global state.
+   */
+  export function getNewLibraryCopy(): typeof Bluebird;
+
+  /**
    * This is relevant to browser environments with no module loader.
    *
    * Release control of the Promise namespace to whatever it was before this library was loaded. Returns a reference to the library namespace so you can attach it to something else.
@@ -724,6 +731,11 @@ declare namespace Bluebird {
    *                  the calling of the passed in function
    */
   export function setScheduler(scheduler: (callback: (...args: any[]) => void) => void): void;
+
+  /**
+   * This property hold the Bluebird version as a string, e.g. "3.4.0".
+   */
+  export const version: string;
 }
 
 export = Bluebird;
