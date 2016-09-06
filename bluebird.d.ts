@@ -8,8 +8,8 @@ declare class Bluebird<R> implements Bluebird.Thenable<R>, Bluebird.Inspection<R
    */
   constructor(callback: (resolve: (thenableOrResult?: R | Bluebird.Thenable<R>) => void, reject: (error?: any) => void, onCancel?: (callback: () => void) => void) => void);
 
- /**
-   * Promises/A+ `.then()`. Returns a new promise chained from this promise. The new promise will be rejected or resolved dedefer on the passed `fulfilledHandler`, `rejectedHandler` and the state of this promise.
+  /**
+   * Promises/A+ `.then()`. Returns a new promise chained from this promise. The new promise will be rejected or resolved dedefer on the passed `onFulfill`, `onReject` and the state of this promise.
    */
   then<U1, U2>(onFulfill: (value: R) => U1 | Bluebird.Thenable<U1>, onReject: (error: any) => U2 | Bluebird.Thenable<U2>): Bluebird<U1 | U2>;
   then<U>(onFulfill: (value: R) => U | Bluebird.Thenable<U>, onReject: (error: any) => U | Bluebird.Thenable<U>): Bluebird<U>;
