@@ -646,10 +646,10 @@ declare namespace Bluebird {
   }
 
   export interface Thenable<R> {
-    then<U1, U2>(onFulfill: (value: R) => U1 | Bluebird.Thenable<U1>, onReject: (error: any) => U2 | Bluebird.Thenable<U2>): Bluebird.Thenable<U1 | U2>;
-    then<U>(onFulfill: (value: R) => U | Bluebird.Thenable<U>, onReject: (error: any) => U | Bluebird.Thenable<U>): Bluebird.Thenable<U>;
-    then<U>(onFulfill: (value: R) => U | Bluebird.Thenable<U>): Bluebird.Thenable<U>;
-    then(): Bluebird.Thenable<R>;
+    then<U1, U2>(onFulfill: (value: R) => U1 | Thenable<U1>, onReject: (error: any) => U2 | Thenable<U2>): Thenable<U1 | U2>;
+    then<U>(onFulfill: (value: R) => U | Thenable<U>, onReject: (error: any) => U | Thenable<U>): Thenable<U>;
+    then<U>(onFulfill: (value: R) => U | Thenable<U>): Thenable<U>;
+    then(): Thenable<R>;
   }
 
   export interface Resolver<R> {
