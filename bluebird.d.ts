@@ -77,6 +77,12 @@ declare class Bluebird<R> implements Bluebird.Thenable<R>, Bluebird.Inspection<R
   tap<U>(onFulfill: (value: R) => U): Bluebird<R>;
 
   /**
+   * Like `.finally`, but is not called for fulfillments.
+   */
+  tapCatch<U>(onFulFill: (value: R) => Bluebird.Thenable<U>): Bluebird<R>;
+  tapCatch<U>(onFulfill: (value: R) => U): Bluebird<R>;
+
+  /**
    * Same as calling `Promise.delay(ms, this)`.
    */
   delay(ms: number): Bluebird<R>;
