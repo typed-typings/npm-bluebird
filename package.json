@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "blue-tape": "^1.0.0",
-    "bluebird": "3.5.0",
+    "bluebird": "3.5.1",
     "onchange": "^3.0.2",
     "tap-spec": "^4.1.1",
     "ts-node": "^3.0.0",
